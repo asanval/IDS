@@ -1,4 +1,4 @@
-# Hybrid IDS — Sistema de detección de intrusiones (reglas + anomalías)
+# IDS Híbrido — Sistema de detección de intrusiones (reglas + anomalías)
 
 IDS híbrido en Python que analiza **logs y flujos de red** combinando dos
 métodos de detección complementarios:
@@ -33,7 +33,7 @@ Fuentes (auth.log, access.log, flows/pcap)
                   Motor IDS  ──►  Alertas priorizadas (texto / JSON)
 ```
 
-Un único modelo `Event` normaliza cada fuente, de modo que la lógica de
+Una única estructura de datos, `Event`, normaliza cada fuente, de modo que la lógica de
 detección no depende del origen de los datos.
 
 ## Uso
