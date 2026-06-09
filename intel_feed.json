@@ -1,0 +1,37 @@
+{
+  "203.0.113.5": {
+    "country": "RU",
+    "asn": "AS12345",
+    "reputation": "malicious",
+    "abuse_score": 95,
+    "categories": ["ssh-bruteforce", "scanner"]
+  },
+  "203.0.113.50": {
+    "country": "CN",
+    "asn": "AS54321",
+    "reputation": "malicious",
+    "abuse_score": 88,
+    "categories": ["web-attack", "fuzzer"]
+  },
+  "203.0.113.99": {
+    "country": "NL",
+    "asn": "AS9999",
+    "reputation": "suspicious",
+    "abuse_score": 42,
+    "categories": ["port-scan"]
+  },
+  "203.0.113.77": {
+    "country": "BR",
+    "asn": "AS28000",
+    "reputation": "suspicious",
+    "abuse_score": 30,
+    "categories": ["rdp-probe"]
+  },
+  "198.51.100.7": {
+    "country": "ES",
+    "asn": "AS3352",
+    "reputation": "clean",
+    "abuse_score": 0,
+    "categories": []
+  }
+}

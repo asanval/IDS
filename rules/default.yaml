@@ -1,0 +1,82 @@
+# Default detection rules for the hybrid IDS.
+# Each rule is declarative; add your own without touching code.
+#
+# type: "match"      -> fires on a single matching event
+# type: "threshold"  -> fires when `count` matches from the same `group_by`
+#                       key occur within `window_seconds`
+#
+# Condition operators per field:
+#   exact value            field: value
+#   substring              field: { contains: "text" }
+#   set membership         field: { in: [a, b] }
+#   regular expression     field: { regex: "pattern" }
+
+rules:
+  - name: "SSH brute force"
+    mitre: T1110
+    type: threshold
+    category: brute_force
+    severity: high
+    description: "Many failed SSH logins from a single source in a short window."
+    conditions:
+      source: auth
+      action: login_failed
+    group_by: src_ip
+    count: 5
+    window_seconds: 60
+
+  - name: "Successful login"
+    mitre: T1078
+    type: match
+    category: auth_success
+    severity: info
+    description: "A successful SSH login. Informational; the correlation engine flags it as suspicious only when preceded by a brute-force burst from the same IP."
+    conditions:
+      source: auth
+      action: login_ok
+
+  - name: "Web admin path probing"
+    mitre: T1595
+    type: threshold
+    category: enumeration
+    severity: medium
+    description: "Repeated requests to sensitive paths from one source."
+    conditions:
+      source: web
+      http_path: { regex: "(?i)(/admin|/wp-login|/\\.env|/phpmyadmin)" }
+    group_by: src_ip
+    count: 3
+    window_seconds: 120
+
+  - name: "SQL injection attempt in URL"
+    mitre: T1190
+    type: match
+    category: web_attack
+    severity: high
+    description: "Request path contains common SQL injection tokens."
+    conditions:
+      source: web
+      http_path: { regex: "(?i)(union(\\s|\\+)+select|'\\s*or\\s*'1'='1|sleep\\()" }
+
+  - name: "Path traversal attempt"
+    mitre: T1190
+    type: match
+    category: web_attack
+    severity: high
+    description: "Request path contains directory traversal sequences."
+    conditions:
+      source: web
+      http_path: { contains: "../" }
+
+  - name: "Connection to high-risk port"
+    mitre: T1046
+    type: threshold
+    category: recon
+    severity: low
+    description: "Repeated connections to commonly abused service ports."
+    conditions:
+      source: network
+      dst_port: { in: [23, 445, 3389, 5900] }
+    group_by: src_ip
+    count: 3
+    window_seconds: 60

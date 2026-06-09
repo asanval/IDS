@@ -1,0 +1,3 @@
+PyYAML>=6.0
+# Optional: enables live pcap parsing instead of CSV flow files.
+# scapy>=2.5
