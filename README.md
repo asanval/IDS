@@ -28,6 +28,8 @@ Fuentes (auth.log, access.log, flows/pcap)
         │
         ├──►  Motor de reglas (firmas YAML + umbrales con ventana)
         └──►  Motor de anomalías (perfilado por IP + z-score)
+        ├──►  Motor de correlación (relaciona eventos entre ellos)
+        └──►  Motor de enriquecimiento (añade información sobre las IPs)
                        │
                        ▼
                   Motor IDS  ──►  Alertas priorizadas (texto / JSON)
